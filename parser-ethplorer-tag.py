@@ -12,14 +12,14 @@ class EthplorerParser:
         self.browser = self.playwright.chromium.launch(headless=True)
         self.context = self.browser.new_context()
         self.page = self.context.new_page()
-        self.tags_file = "remaining_tags.txt"
+        self.tags_file = "data/remaining_tags.txt"
         
         # Настройка логирования
         logging.basicConfig(
             level=logging.INFO,
             format='%(asctime)s - %(levelname)s - %(message)s',
             handlers=[
-                logging.FileHandler('parser.log'),
+                logging.FileHandler('data/parser.log'),
                 logging.StreamHandler()
             ]
         )
@@ -140,7 +140,7 @@ class EthplorerParser:
             self.logger.error(f"Ошибка при получении данных тега {tag}: {e}")
             return []
 
-    def append_to_json(self, data, filename='ethplorer_data.json'):
+    def append_to_json(self, data, filename='data/ethplorer_data.json'):
         """Добавление новых данных в JSON файл"""
         try:
             try:
@@ -159,7 +159,7 @@ class EthplorerParser:
         except Exception as e:
             self.logger.error(f"Ошибка при сохранении данных: {e}")
 
-    def save_to_json(self, data, filename='ethplorer_data.json'):
+    def save_to_json(self, data, filename='data/ethplorer_data.json'):
         """Сохранение данных в JSON для последующей записи в SQL"""
         with open(filename, 'w', encoding='utf-8') as f:
             json.dump(data, f, ensure_ascii=False, indent=4)
