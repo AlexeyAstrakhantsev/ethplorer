@@ -94,7 +94,6 @@ class EthplorerParser:
 
     def get_tag_data(self, tag):
         """Получение данных по конкретному тегу"""
-        data = []
         processed_addresses = set()  # Множество для отслеживания обработанных адресов
         
         try:
@@ -103,7 +102,7 @@ class EthplorerParser:
             
             while True:
                 self.page.wait_for_selector('.d-flex.flex-column.flex-fill')
-                time.sleep(1)
+                time.sleep(0.1)
                 
                 address_blocks = self.page.query_selector_all('.d-flex.flex-column.flex-fill')
                 
@@ -127,17 +126,37 @@ class EthplorerParser:
                         name_element = block.query_selector('.tags-table-token a')
                         name = name_element.inner_text().strip() if name_element else ''
                         
-                        # Получаем теги и убираем дубликаты через множество
+                        # Получаем иконку
+                        icon_data = None
+                        icon_url = None
+                        icon_element = block.query_selector('.tags-table-token-icon')
+                        if icon_element:
+                            icon_url = icon_element.get_attribute('src')
+                            if icon_url:
+                                if icon_url.startswith('/'):
+                                    icon_url = f"{self.base_url}{icon_url}"
+                                try:
+                                    response = self.context.request.get(icon_url)
+                                    if response.ok:
+                                        icon_data = response.body()
+                                except Exception as e:
+                                    self.logger.error(f"Ошибка при получении иконки {icon_url}: {e}")
+                        
+                        # Получаем теги
                         tag_elements = block.query_selector_all('.tags-list .tag__public .tag_name')
                         address_tags = list(set(t.inner_text().strip() for t in tag_elements)) if tag_elements else []
                         
-                        item = {
-                            'name': name,
+                        # Сохраняем данные в базу
+                        data = {
                             'address': address,
+                            'name': name,
+                            'icon_url': icon_url,
+                            'icon_data': icon_data,
                             'tags': address_tags
                         }
-                        data.append(item)
-                        self.logger.debug(f"Добавлен адрес: {address[:10]}... с тегами: {', '.join(address_tags)}")
+                        
+                        self.address_repository.save_address(data)
+                        self.logger.debug(f"Сохранен адрес: {address[:10]}... с тегами: {', '.join(address_tags)}")
                     
                     except Exception as e:
                         self.logger.error(f"Ошибка при обработке блока адреса: {e}")
@@ -150,12 +169,10 @@ class EthplorerParser:
                 next_button.click()
                 time.sleep(1)
             
-            self.logger.info(f"Завершена обработка тега {tag}, найдено записей: {len(data)}")
-            return data
+            self.logger.info(f"Завершена обработка тега {tag}, обработано адресов: {len(processed_addresses)}")
             
         except Exception as e:
             self.logger.error(f"Ошибка при получении данных тега {tag}: {e}")
-            return []
 
     def append_to_json(self, data, filename='data/ethplorer_data.json'):
         """Добавление новых данных в JSON файл"""
@@ -242,9 +259,8 @@ class EthplorerParser:
             
             # Собираем данные по каждому тегу
             for tag in tags:
-                tag_data = self.get_tag_data(tag)
-                self.append_to_json(tag_data)
-                self.logger.info(f"Обработан тег {tag}, найдено записей: {len(tag_data)}")
+                self.get_tag_data(tag)
+                self.logger.info(f"Обработан тег {tag}")
                 self.remove_tag_from_file(tag)
             
         except Exception as e:
