@@ -4,22 +4,39 @@ import json
 import logging
 from pathlib import Path
 import os
+import aiohttp
+import base64
+from datetime import datetime
+from db.models import Database, AddressRepository
 
 class EthplorerParser:
     def __init__(self):
-        self.base_url = "https://ethplorer.io"
+        self.base_url = os.getenv('BASE_URL', 'https://ethplorer.io')
         self.playwright = sync_playwright().start()
-        self.browser = self.playwright.chromium.launch(headless=True)
+        self.browser = self.playwright.chromium.launch(
+            headless=os.getenv('PLAYWRIGHT_HEADLESS', 'true').lower() == 'true'
+        )
         self.context = self.browser.new_context()
         self.page = self.context.new_page()
-        self.tags_file = "data/remaining_tags.txt"
+        self.tags_file = f"data/{os.getenv('TAGS_FILE', 'remaining_tags.txt')}"
+        
+        # Инициализация базы данных
+        db_config = {
+            'dbname': os.getenv('DB_NAME'),
+            'user': os.getenv('DB_USER'),
+            'password': os.getenv('DB_PASSWORD'),
+            'host': os.getenv('DB_HOST'),
+            'port': os.getenv('DB_PORT')
+        }
+        self.db = Database(db_config)
+        self.address_repository = AddressRepository(self.db)
         
         # Настройка логирования
         logging.basicConfig(
-            level=logging.INFO,
+            level=getattr(logging, os.getenv('PARSER_LOG_LEVEL', 'INFO')),
             format='%(asctime)s - %(levelname)s - %(message)s',
             handlers=[
-                logging.FileHandler('data/parser.log'),
+                logging.FileHandler(f"data/{os.getenv('LOG_FILE', 'parser.log')}"),
                 logging.StreamHandler()
             ]
         )
@@ -170,24 +187,71 @@ class EthplorerParser:
         self.browser.close()
         self.playwright.stop()
 
-def main():
-    parser = EthplorerParser()
-    try:
-        # Получаем список тегов
-        tags = parser.get_tags()
-        parser.logger.info(f"Найдено тегов: {len(tags)}")
-        
-        # Собираем данные по каждому тегу
-        for tag in tags:
-            tag_data = parser.get_tag_data(tag)
-            parser.append_to_json(tag_data)
-            parser.logger.info(f"Обработан тег {tag}, найдено записей: {len(tag_data)}")
-            parser.remove_tag_from_file(tag)
-        
-    except Exception as e:
-        parser.logger.error(f"Критическая ошибка: {e}")
-    finally:
-        parser.close()
+    async def process_address(self, address):
+        try:
+            await self.page.goto(f"{self.base_url}/address/{address}")
+            await self.page.wait_for_load_state('networkidle')
+            
+            # Получаем иконку
+            icon_data = None
+            icon_url = None
+            icon_element = await self.page.query_selector('.tags-table-token-icon')
+            if icon_element:
+                icon_url = await icon_element.get_attribute('src')
+                if icon_url:
+                    if icon_url.startswith('/'):
+                        icon_url = f"{self.base_url}{icon_url}"
+                    async with aiohttp.ClientSession() as session:
+                        async with session.get(icon_url) as response:
+                            if response.status == 200:
+                                icon_data = await response.read()  # Теперь сохраняем как bytes
+
+            # Получаем название и описание
+            name = await self.get_text_content('.address-name-text')
+            
+            # Получаем теги
+            tags = []
+            tag_elements = await self.page.query_selector_all('.tag-item')
+            for tag_element in tag_elements:
+                tag_text = await tag_element.text_content()
+                tags.append(tag_text.strip())
+
+            data = {
+                'address': address,
+                'name': name,
+                'icon_url': icon_url,
+                'icon_data': icon_data,
+                'tags': tags
+            }
+            
+            # Сохраняем в базу данных
+            self.address_repository.save_address(data)
+            
+            logging.info(f"Successfully processed address: {address}")
+            return True
+            
+        except Exception as e:
+            logging.error(f"Error processing address {address}: {str(e)}")
+            return False
+
+    def run(self):
+        try:
+            # Получаем список тегов
+            tags = self.get_tags()
+            self.logger.info(f"Найдено тегов: {len(tags)}")
+            
+            # Собираем данные по каждому тегу
+            for tag in tags:
+                tag_data = self.get_tag_data(tag)
+                self.append_to_json(tag_data)
+                self.logger.info(f"Обработан тег {tag}, найдено записей: {len(tag_data)}")
+                self.remove_tag_from_file(tag)
+            
+        except Exception as e:
+            self.logger.error(f"Критическая ошибка: {e}")
+        finally:
+            self.close()
 
 if __name__ == "__main__":
-    main()
+    parser = EthplorerParser()
+    parser.run()

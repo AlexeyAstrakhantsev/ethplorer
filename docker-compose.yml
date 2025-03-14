@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  parser:
+    build: .
+    volumes:
+      - ${DATA_DIR}:/app/data
+    environment:
+      - TZ=${TZ}
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - PLAYWRIGHT_HEADLESS=${PLAYWRIGHT_HEADLESS}
+      - PARSER_LOG_LEVEL=${PARSER_LOG_LEVEL}
+      - LOG_FILE=${LOG_FILE}
+      - TAGS_FILE=${TAGS_FILE}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    restart: unless-stopped
+
+volumes:
+  postgres_data: 
