@@ -257,16 +257,24 @@ class EthplorerParser:
             tags = self.get_tags()
             self.logger.info(f"Найдено тегов: {len(tags)}")
             
+            if not tags:
+                self.logger.info("Теги не найдены. Завершение работы.")
+                return
+            
             # Собираем данные по каждому тегу
             for tag in tags:
                 self.get_tag_data(tag)
                 self.logger.info(f"Обработан тег {tag}")
                 self.remove_tag_from_file(tag)
             
+            self.logger.info("Все теги обработаны. Завершение работы.")
+            
         except Exception as e:
             self.logger.error(f"Критическая ошибка: {e}")
         finally:
             self.close()
+            # Явно завершаем процесс
+            os._exit(0)
 
 if __name__ == "__main__":
     parser = EthplorerParser()
