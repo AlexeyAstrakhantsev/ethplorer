@@ -61,11 +61,10 @@ class AddressRepository:
                             address_name = EXCLUDED.address_name,
                             type = EXCLUDED.type,
                             source = EXCLUDED.source
-                        RETURNING id
                     """, (
                         address_data['address'],
                         address_name,
-                        None,  # type всегда null
+                        "",  # Передаем пустую строку вместо None для поля type
                         "ethplorer.io tag"
                     ))
                     unified_id = cur.fetchone()[0]
