@@ -45,10 +45,13 @@ class AddressRepository:
                         address_data.get('icon_url')
                     ))
                     address_id = cur.fetchone()[0]
+                    logging.info(f"Saved to addresses table, got id: {address_id}")
                     
                     # Сохраняем в unified_addresses
                     tags = address_data.get('tags', [])
                     address_name = address_data['name'] if address_data['name'] else (tags[0] if tags else '')
+                    
+                    logging.info(f"Preparing unified_addresses data: address={address_data['address']}, name={address_name}")
                     
                     cur.execute("""
                         INSERT INTO unified_addresses (address, address_name, type, source)
@@ -58,12 +61,15 @@ class AddressRepository:
                             address_name = EXCLUDED.address_name,
                             type = EXCLUDED.type,
                             source = EXCLUDED.source
+                        RETURNING id
                     """, (
                         address_data['address'],
                         address_name,
                         None,  # type всегда null
                         "ethplorer.io tag"
                     ))
+                    unified_id = cur.fetchone()[0]
+                    logging.info(f"Saved to unified_addresses, got id: {unified_id}")
                     
                     # Сохраняем теги
                     if 'tags' in address_data:
@@ -85,7 +91,7 @@ class AddressRepository:
                             """, (address_id, tag_id))
                     
                     conn.commit()
-                    logging.info(f"Successfully saved address {address_data['address']} to database")
+                    logging.info(f"Successfully saved address {address_data['address']} to all tables")
                     
                 except Exception as e:
                     conn.rollback()
