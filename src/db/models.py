@@ -28,7 +28,7 @@ class AddressRepository:
         with self.db.get_connection() as conn:
             with conn.cursor() as cur:
                 try:
-                    # Сохраняем адрес
+                    # Сохраняем адрес в основную таблицу
                     cur.execute("""
                         INSERT INTO addresses (address, name, icon, icon_url)
                         VALUES (%s, %s, %s, %s)
@@ -41,10 +41,29 @@ class AddressRepository:
                     """, (
                         address_data['address'],
                         address_data['name'],
-                        address_data.get('icon_data'),  # Декодированные бинарные данные
+                        address_data.get('icon_data'),
                         address_data.get('icon_url')
                     ))
                     address_id = cur.fetchone()[0]
+                    
+                    # Сохраняем в unified_addresses
+                    tags = address_data.get('tags', [])
+                    address_name = address_data['name'] if address_data['name'] else (tags[0] if tags else '')
+                    
+                    cur.execute("""
+                        INSERT INTO unified_addresses (address, address_name, type, source)
+                        VALUES (%s, %s, %s, %s)
+                        ON CONFLICT (address) 
+                        DO UPDATE SET 
+                            address_name = EXCLUDED.address_name,
+                            type = EXCLUDED.type,
+                            source = EXCLUDED.source
+                    """, (
+                        address_data['address'],
+                        address_name,
+                        None,  # type всегда null
+                        "ethplorer.io tag"
+                    ))
                     
                     # Сохраняем теги
                     if 'tags' in address_data:
