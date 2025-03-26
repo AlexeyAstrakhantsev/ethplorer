@@ -39,9 +39,10 @@ class EthplorerParser:
             'host': os.getenv('DB_HOST'),
             'port': os.getenv('DB_PORT')
         }
+        self.logger.info(f"Подключение к БД: {db_config}")
         self.db = Database(db_config)
         self.address_repository = AddressRepository(self.db)
-        self.logger.info(f"Подключение к БД: {db_config}")
+        
 
 
     def load_tags_from_file(self):
