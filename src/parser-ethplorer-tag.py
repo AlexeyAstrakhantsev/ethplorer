@@ -19,18 +19,7 @@ class EthplorerParser:
         self.context = self.browser.new_context()
         self.page = self.context.new_page()
         self.tags_file = f"data/{os.getenv('TAGS_FILE', 'remaining_tags.txt')}"
-        
-        # Инициализация базы данных
-        db_config = {
-            'dbname': os.getenv('DB_NAME'),
-            'user': os.getenv('DB_USER'),
-            'password': os.getenv('DB_PASSWORD'),
-            'host': os.getenv('DB_HOST'),
-            'port': os.getenv('DB_PORT')
-        }
-        self.db = Database(db_config)
-        self.address_repository = AddressRepository(self.db)
-        
+
         # Настройка логирования
         logging.basicConfig(
             level=getattr(logging, os.getenv('PARSER_LOG_LEVEL', 'INFO')),
@@ -41,6 +30,19 @@ class EthplorerParser:
             ]
         )
         self.logger = logging.getLogger(__name__)
+
+        # Инициализация базы данных
+        db_config = {
+            'dbname': os.getenv('DB_NAME'),
+            'user': os.getenv('DB_USER'),
+            'password': os.getenv('DB_PASSWORD'),
+            'host': os.getenv('DB_HOST'),
+            'port': os.getenv('DB_PORT')
+        }
+        self.db = Database(db_config)
+        self.address_repository = AddressRepository(self.db)
+        self.logger.info(f"Подключение к БД: {db_config}")
+
 
     def load_tags_from_file(self):
         """Загрузка списка тегов из файла"""
