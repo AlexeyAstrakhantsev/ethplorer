@@ -61,6 +61,7 @@ class AddressRepository:
                             address_name = EXCLUDED.address_name,
                             type = EXCLUDED.type,
                             source = EXCLUDED.source
+                        RETURNING id
                     """, (
                         address_data['address'],
                         address_name,
