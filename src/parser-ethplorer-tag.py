@@ -18,8 +18,7 @@ class EthplorerParser:
         )
         self.context = self.browser.new_context()
         self.page = self.context.new_page()
-        self.tags_file = f"data/{os.getenv('TAGS_FILE', 'remaining_tags.txt')}"
-
+        
         # Настройка логирования
         logging.basicConfig(
             level=getattr(logging, os.getenv('PARSER_LOG_LEVEL', 'INFO')),
@@ -45,36 +44,8 @@ class EthplorerParser:
         
 
 
-    def load_tags_from_file(self):
-        """Загрузка списка тегов из файла"""
-        if os.path.exists(self.tags_file):
-            with open(self.tags_file, 'r', encoding='utf-8') as f:
-                tags = [line.strip() for line in f if line.strip()]
-            self.logger.info(f"Загружено {len(tags)} тегов из файла")
-            return tags
-        return []
-
-    def save_tags_to_file(self, tags):
-        """Сохранение списка тегов в файл"""
-        with open(self.tags_file, 'w', encoding='utf-8') as f:
-            f.write('\n'.join(tags))
-        self.logger.info(f"Сохранено {len(tags)} тегов в файл")
-
-    def remove_tag_from_file(self, tag):
-        """Удаление обработанного тега из файла"""
-        tags = self.load_tags_from_file()
-        if tag in tags:
-            tags.remove(tag)
-            self.save_tags_to_file(tags)
-            self.logger.info(f"Тег {tag} удален из файла")
-
     def get_tags(self):
-        """Получение списка всех тегов"""
-        # Сначала пробуем загрузить теги из файла
-        existing_tags = self.load_tags_from_file()
-        if existing_tags:
-            return existing_tags
-
+        """Получение списка всех тегов с сайта"""
         tags = []
         try:
             self.logger.info("Начинаем получение списка тегов с сайта")
@@ -88,7 +59,6 @@ class EthplorerParser:
                 tags.append(tag_text)
             
             self.logger.info(f"Получено {len(tags)} тегов")
-            self.save_tags_to_file(tags)
             return tags
             
         except Exception as e:
@@ -256,7 +226,7 @@ class EthplorerParser:
 
     def run(self):
         try:
-            # Получаем список тегов
+            # Всегда получаем свежие теги с сайта
             tags = self.get_tags()
             self.logger.info(f"Найдено тегов: {len(tags)}")
             
@@ -268,7 +238,6 @@ class EthplorerParser:
             for tag in tags:
                 self.get_tag_data(tag)
                 self.logger.info(f"Обработан тег {tag}")
-                self.remove_tag_from_file(tag)
             
             self.logger.info("Все теги обработаны. Завершение работы.")
             
@@ -276,7 +245,6 @@ class EthplorerParser:
             self.logger.error(f"Критическая ошибка: {e}")
         finally:
             self.close()
-            # Явно завершаем процесс
             os._exit(0)
 
 if __name__ == "__main__":
