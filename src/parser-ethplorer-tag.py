@@ -140,8 +140,11 @@ class EthplorerParser:
                             'tags': address_tags
                         }
                         
-                        self.address_repository.save_address(data)
+                        # Логируем без icon_data
                         self.logger.debug(f"Сохранен адрес: {address[:10]}... с тегами: {', '.join(address_tags)}")
+                        self.logger.debug(f"Данные адреса (без icon_data): {json.dumps({k:v for k,v in data.items() if k != 'icon_data'}, default=str)}")
+                        
+                        self.address_repository.save_address(data)
                     
                     except Exception as e:
                         self.logger.error(f"Ошибка при обработке блока адреса: {e}")

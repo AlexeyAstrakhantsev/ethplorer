@@ -29,9 +29,12 @@ class AddressRepository:
         with self.db.get_connection() as conn:
             with conn.cursor() as cur:
                 try:
+                    # Создаем копию данных для логов без icon_data
+                    loggable_data = {k: v for k, v in address_data.items() if k != 'icon_data'}
+                    
                     # Логирование перед сохранением
                     logging.info(f"Сохранение адреса: {address_data['address']}")
-                    logging.debug(f"Данные для сохранения: {json.dumps(address_data, default=str, indent=2)}")
+                    logging.debug(f"Данные для сохранения: {json.dumps(loggable_data, default=str, indent=2)}")
                     
                     # Сохраняем адрес в основную таблицу
                     cur.execute("""
