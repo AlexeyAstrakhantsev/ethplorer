@@ -129,6 +129,7 @@ class EthplorerParser:
                                 
                                 if tag_text:
                                     address_tags.append(tag_text)
+                                    tag_counter += 1
                                     self.logger.debug(
                                         f"Тэг найден: {tag_text} | Источник: "
                                         f"text={bool(text_element)}, "
@@ -177,6 +178,9 @@ class EthplorerParser:
                         self.logger.debug(f"Данные адреса (без icon_data): {json.dumps({k:v for k,v in data.items() if k != 'icon_data'}, default=str)}")
                         
                         self.address_repository.save_address(data)
+                        
+                        # После сбора тегов для адреса:
+                        tag_counter += len(address_tags)
                     
                     except Exception as e:
                         self.logger.error(f"Ошибка обработки блока: {e}")
