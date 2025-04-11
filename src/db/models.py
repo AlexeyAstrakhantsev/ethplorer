@@ -33,7 +33,7 @@ class AddressRepository:
                     loggable_data = {k: v for k, v in address_data.items() if k != 'icon_data'}
                     
                     # Логирование перед сохранением
-                    logging.info(f"Сохранение адреса: {address_data['address']}")
+                    logging.debug(f"Сохранение адреса: {address_data['address']}")
                     logging.debug(f"Данные для сохранения: {json.dumps(loggable_data, default=str, indent=2)}")
                     
                     # Сохраняем адрес в основную таблицу
@@ -53,13 +53,13 @@ class AddressRepository:
                         address_data.get('icon_url')
                     ))
                     address_id = cur.fetchone()[0]
-                    logging.info(f"Saved to addresses table, got id: {address_id}")
+                    logging.debug(f"Saved to addresses table, got id: {address_id}")
                     
                     # Сохраняем в unified_addresses
                     tags = address_data.get('tags', [])
                     address_name = address_data['name'] if address_data['name'] else (tags[0] if tags else '')
                     
-                    logging.info(f"Preparing unified_addresses data: address={address_data['address']}, name={address_name}")
+                    logging.debug(f"Preparing unified_addresses data: address={address_data['address']}, name={address_name}")
                     
                     cur.execute("""
                         INSERT INTO unified_addresses (address, address_name, type, source)
@@ -77,7 +77,7 @@ class AddressRepository:
                         "ethplorer.io tag"
                     ))
                     unified_id = cur.fetchone()[0]
-                    logging.info(f"Saved to unified_addresses, got id: {unified_id}")
+                    logging.debug(f"Saved to unified_addresses, got id: {unified_id}")
                     
                     # Сохраняем теги
                     if 'tags' in address_data:
@@ -99,7 +99,7 @@ class AddressRepository:
                             """, (address_id, tag_id))
                     
                     conn.commit()
-                    logging.info(f"Successfully saved address {address_data['address']} to all tables")
+                    logging.debug(f"Successfully saved address {address_data['address']} to all tables")
                     
                     # Логирование после сохранения
                     logging.info(f"Успешно сохранено {len(address_data.get('tags', []))} тегов для адреса {address_data['address']}")
