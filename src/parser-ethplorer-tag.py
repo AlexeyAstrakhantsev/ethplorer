@@ -67,7 +67,8 @@ class EthplorerParser:
 
     def get_tag_data(self, tag):
         """Получение данных по конкретному тегу"""
-        processed_addresses = set()  # Множество для отслеживания обработанных адресов
+        processed_addresses = set()
+        tag_counter = 0  # Счётчик тегов для текущего адреса
         
         try:
             self.logger.info(f"Начинаем обработку тега: {tag}")
@@ -84,16 +85,26 @@ class EthplorerParser:
                 
                 for block in address_blocks:
                     try:
-                        # Получаем адрес
                         address_element = block.query_selector('.tags-table-address .overflow-center-elips')
                         address = address_element.inner_text().strip() if address_element else ''
                         
-                        # Пропускаем, если адрес уже обработан
                         if not address or address in processed_addresses:
                             continue
                         
-                        # Добавляем адрес в множество обработанных
                         processed_addresses.add(address)
+                        
+                        # Логирование перед получением тегов
+                        self.logger.debug(f"Обработка адреса: {address}")
+                        
+                        # Получаем теги с расширенным логированием
+                        tag_elements = block.query_selector_all('.tags-list .tag__public .tag_name')
+                        address_tags = []
+                        if tag_elements:
+                            address_tags = list({t.inner_text().strip() for t in tag_elements})
+                            self.logger.debug(f"Найдено тегов для {address[:8]}...: {len(address_tags)}")
+                            self.logger.debug(f"Список тегов: {', '.join(address_tags)}")
+                        
+                        tag_counter += len(address_tags)
                         
                         # Получаем имя токена/контракта
                         name_element = block.query_selector('.tags-table-token a')
@@ -115,10 +126,6 @@ class EthplorerParser:
                                 except Exception as e:
                                     self.logger.error(f"Ошибка при получении иконки {icon_url}: {e}")
                         
-                        # Получаем теги
-                        tag_elements = block.query_selector_all('.tags-list .tag__public .tag_name')
-                        address_tags = list(set(t.inner_text().strip() for t in tag_elements)) if tag_elements else []
-                        
                         # Сохраняем данные в базу
                         data = {
                             'address': address,
@@ -135,6 +142,9 @@ class EthplorerParser:
                         self.logger.error(f"Ошибка при обработке блока адреса: {e}")
                         continue
                 
+                # Логирование пагинации
+                self.logger.debug(f"Обработано страниц: {page_num}")
+                
                 next_button = self.page.query_selector('li.page-item:not(.disabled) a.page-link span[aria-hidden="true"]:text("»")')
                 if not next_button:
                     break
@@ -142,8 +152,12 @@ class EthplorerParser:
                 next_button.click()
                 time.sleep(1)
             
-            self.logger.info(f"Завершена обработка тега {tag}, обработано адресов: {len(processed_addresses)}")
-            
+            # Финализируем логирование для тега
+            self.logger.info(f"Завершена обработка тега {tag}")
+            self.logger.info(f"Всего уникальных адресов: {len(processed_addresses)}")
+            self.logger.info(f"Всего тегов сохранено: {tag_counter}")
+            self.logger.info(f"Среднее тегов на адрес: {tag_counter/len(processed_addresses) if processed_addresses else 0:.2f}")
+        
         except Exception as e:
             self.logger.error(f"Ошибка при получении данных тега {tag}: {e}")
 

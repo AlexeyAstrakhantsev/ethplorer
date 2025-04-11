@@ -3,6 +3,7 @@ import psycopg2
 from psycopg2 import pool
 from contextlib import contextmanager
 import logging
+import json
 
 class Database:
     def __init__(self, config):
@@ -28,6 +29,10 @@ class AddressRepository:
         with self.db.get_connection() as conn:
             with conn.cursor() as cur:
                 try:
+                    # Логирование перед сохранением
+                    logging.info(f"Сохранение адреса: {address_data['address']}")
+                    logging.debug(f"Данные для сохранения: {json.dumps(address_data, default=str, indent=2)}")
+                    
                     # Сохраняем адрес в основную таблицу
                     cur.execute("""
                         INSERT INTO addresses (address, name, icon, icon_url)
@@ -92,6 +97,9 @@ class AddressRepository:
                     
                     conn.commit()
                     logging.info(f"Successfully saved address {address_data['address']} to all tables")
+                    
+                    # Логирование после сохранения
+                    logging.info(f"Успешно сохранено {len(address_data.get('tags', []))} тегов для адреса {address_data['address']}")
                     
                 except Exception as e:
                     conn.rollback()
