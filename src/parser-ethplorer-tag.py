@@ -68,19 +68,24 @@ class EthplorerParser:
     def get_tag_data(self, tag):
         """Получение данных по конкретному тегу"""
         processed_addresses = set()
-        tag_counter = 0  # Счётчик тегов для текущего адреса
-        
+        tag_counter = 0
+        current_page = 1  # Добавляем счетчик страниц
+
         try:
             self.logger.info(f"Начинаем обработку тега: {tag}")
             self.page.goto(f"{self.base_url}/tag/{tag}")
             
             while True:
                 self.page.wait_for_selector('.d-flex.flex-column.flex-fill')
-                time.sleep(0.1)
+                time.sleep(0.5)  # Увеличиваем задержку для стабильности
+                
+                # Логирование текущей страницы
+                self.logger.debug(f"Обработка страницы: {current_page}")
                 
                 address_blocks = self.page.query_selector_all('.d-flex.flex-column.flex-fill')
                 
                 if not address_blocks:
+                    self.logger.debug("Адресы на странице не найдены")
                     break
                 
                 for block in address_blocks:
@@ -142,18 +147,27 @@ class EthplorerParser:
                         self.logger.error(f"Ошибка при обработке блока адреса: {e}")
                         continue
                 
-                # Логирование пагинации
-                self.logger.debug(f"Обработано страниц: {page_num}")
+                # Пытаемся найти кнопку "Следующая страница"
+                next_button = self.page.query_selector(
+                    'li.page-item:not(.disabled) a.page-link:has-text("›")'
+                )
                 
-                next_button = self.page.query_selector('li.page-item:not(.disabled) a.page-link span[aria-hidden="true"]:text("»")')
                 if not next_button:
+                    self.logger.debug("Кнопка следующей страницы не найдена")
                     break
-                
-                next_button.click()
-                time.sleep(1)
+                    
+                # Кликаем и ждем загрузки
+                try:
+                    next_button.click()
+                    self.page.wait_for_load_state("networkidle")
+                    current_page += 1
+                    time.sleep(1)  # Добавляем задержку для стабильности
+                except Exception as e:
+                    self.logger.error(f"Ошибка при переходе на страницу {current_page+1}: {e}")
+                    break
             
-            # Финализируем логирование для тега
-            self.logger.info(f"Завершена обработка тега {tag}")
+            # Финализируем логирование
+            self.logger.info(f"Обработано страниц: {current_page}")
             self.logger.info(f"Всего уникальных адресов: {len(processed_addresses)}")
             self.logger.info(f"Всего тегов сохранено: {tag_counter}")
             self.logger.info(f"Среднее тегов на адрес: {tag_counter/len(processed_addresses) if processed_addresses else 0:.2f}")
