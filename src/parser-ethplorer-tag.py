@@ -69,55 +69,45 @@ class EthplorerParser:
         """Получение данных по конкретному тегу"""
         processed_addresses = set()
         tag_counter = 0
-        current_page = 1  # Добавляем счетчик страниц
+        current_page = 1
 
         try:
             self.logger.info(f"Начинаем обработку тега: {tag}")
             self.page.goto(f"{self.base_url}/tag/{tag}")
+            self.page.wait_for_selector('tbody tr', timeout=10000)  # Ждем загрузки таблицы
             
             while True:
-                self.page.wait_for_selector('.d-flex.flex-column.flex-fill')
-                time.sleep(0.5)  # Увеличиваем задержку для стабильности
-                
-                # Логирование текущей страницы
-                self.logger.debug(f"Обработка страницы: {current_page}")
-                
-                address_blocks = self.page.query_selector_all('.d-flex.flex-column.flex-fill')
-                
-                if not address_blocks:
-                    self.logger.debug("Адресы на странице не найдены")
-                    break
+                # Ожидаем обновления данных после пагинации
+                self.page.wait_for_load_state("networkidle")
+                time.sleep(1)
+
+                # Получаем все блоки адресов
+                address_blocks = self.page.query_selector_all('tbody tr')
                 
                 for block in address_blocks:
                     try:
+                        # Получаем адрес
                         address_element = block.query_selector('.tags-table-address .overflow-center-elips')
                         address = address_element.inner_text().strip() if address_element else ''
                         
+                        # Пропускаем дубликаты
                         if not address or address in processed_addresses:
                             continue
                         
                         processed_addresses.add(address)
                         
-                        # Логирование перед получением тегов
-                        self.logger.debug(f"Обработка адреса: {address}")
-                        
-                        # Новые селекторы для тегов
-                        tags_container = block.query_selector('.tags-table-tags')
+                        # Получаем контейнер тегов
+                        tags_container = block.query_selector('span.tags-list')
                         if not tags_container:
-                            self.logger.debug("Контейнер тегов не найден")
+                            self.logger.debug(f"Теги не найдены для адреса: {address}")
                             continue
                         
-                        tag_elements = tags_container.query_selector_all('.tag__public')
+                        # Собираем теги
+                        tag_elements = tags_container.query_selector_all('.tag__public .tag_name')
+                        address_tags = [t.inner_text().strip() for t in tag_elements if t.inner_text().strip()]
                         
-                        # Альтернативный вариант:
-                        # tag_elements = block.query_selector_all('div.tags-table-tags div.tag__public')
-                        
-                        address_tags = []
-                        if tag_elements:
-                            address_tags = [t.inner_text().strip() for t in tag_elements if t.inner_text().strip()]
-                            self.logger.debug(f"Найдено тегов: {len(address_tags)}")
-                        
-                        tag_counter += len(address_tags)
+                        # Логируем результат
+                        self.logger.debug(f"Адрес: {address[:8]}... | Теги: {len(address_tags)}")
                         
                         # Получаем имя токена/контракта
                         name_element = block.query_selector('.tags-table-token a')
@@ -155,28 +145,28 @@ class EthplorerParser:
                         self.address_repository.save_address(data)
                     
                     except Exception as e:
-                        self.logger.error(f"Ошибка при обработке блока адреса: {e}")
+                        self.logger.error(f"Ошибка обработки блока: {e}")
                         continue
-                
-                # Пытаемся найти кнопку "Следующая страница"
+
+                # Обработка пагинации
                 next_button = self.page.query_selector(
-                    'li.page-item:not(.disabled) a.page-link:has-text("›")'
+                    'li.page-item:not(.disabled) a.page-link:has-text("»")'
                 )
                 
                 if not next_button:
-                    self.logger.debug("Кнопка следующей страницы не найдена")
+                    self.logger.info("Достигнут конец страниц")
                     break
                     
-                # Кликаем и ждем загрузки
                 try:
                     next_button.click()
-                    self.page.wait_for_load_state("networkidle")
                     current_page += 1
-                    time.sleep(1)  # Добавляем задержку для стабильности
+                    self.logger.info(f"Переход на страницу {current_page}")
+                    self.page.wait_for_load_state("networkidle")
+                    time.sleep(2)  # Даем время на загрузку
                 except Exception as e:
-                    self.logger.error(f"Ошибка при переходе на страницу {current_page+1}: {e}")
+                    self.logger.error(f"Ошибка пагинации: {e}")
                     break
-            
+
             # Финализируем логирование
             self.logger.info(f"Обработано страниц: {current_page}")
             self.logger.info(f"Всего уникальных адресов: {len(processed_addresses)}")
@@ -184,7 +174,7 @@ class EthplorerParser:
             self.logger.info(f"Среднее тегов на адрес: {tag_counter/len(processed_addresses) if processed_addresses else 0:.2f}")
         
         except Exception as e:
-            self.logger.error(f"Ошибка при получении данных тега {tag}: {e}")
+            self.logger.error(f"Критическая ошибка: {e}")
 
     def append_to_json(self, data, filename='data/ethplorer_data.json'):
         """Добавление новых данных в JSON файл"""
