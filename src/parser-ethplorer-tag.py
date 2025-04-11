@@ -126,7 +126,7 @@ class EthplorerParser:
                                 
                                 if tag_text:
                                     address_tags.append(tag_text)
-                                    self.logger.debug(f"Тег найден: {tag_text} | Источник: {{
+                                    self.logger.debug(f"Тэг найден: {tag_text} | Источник: {{
                                         'text': {bool(text_element)}, 
                                         'data-tag': {bool(t.get_attribute('data-tag'))},
                                         'href': {bool(href)}
