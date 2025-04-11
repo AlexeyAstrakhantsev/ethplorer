@@ -39,11 +39,11 @@ class AddressRepository:
                     # Сохраняем адрес в основную таблицу
                     cur.execute("""
                         INSERT INTO addresses (address, name, icon, icon_url)
-                        VALUES (%s, %s, %s, %s)
+                        VALUES (%s, %s, %s::bytea, %s)
                         ON CONFLICT (address) 
                         DO UPDATE SET 
                             name = EXCLUDED.name,
-                            icon = EXCLUDED.icon,
+                            icon = EXCLUDED.icon::bytea,
                             icon_url = EXCLUDED.icon_url
                         RETURNING id
                     """, (

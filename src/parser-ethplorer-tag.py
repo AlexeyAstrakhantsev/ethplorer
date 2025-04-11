@@ -161,6 +161,10 @@ class EthplorerParser:
                                     response = self.context.request.get(icon_url)
                                     if response.ok:
                                         icon_data = response.body()
+                                        # Проверяем размер данных (например, до 1MB)
+                                        if len(icon_data) > 1_000_000:
+                                            self.logger.warning(f"Иконка слишком большая: {len(icon_data)} bytes")
+                                            icon_data = None
                                 except Exception as e:
                                     self.logger.error(f"Ошибка при получении иконки {icon_url}: {e}")
                         
