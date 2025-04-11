@@ -102,9 +102,39 @@ class EthplorerParser:
                             self.logger.debug(f"Теги не найдены для адреса: {address}")
                             continue
                         
-                        # Собираем теги
-                        tag_elements = tags_container.query_selector_all('.tag__public .tag_name')
-                        address_tags = [t.inner_text().strip() for t in tag_elements if t.inner_text().strip()]
+                        # Собираем все теги (включая иконки)
+                        tag_elements = tags_container.query_selector_all('.tag__public')
+                        address_tags = []
+                        
+                        for t in tag_elements:
+                            try:
+                                # Вариант 1: Текстовый тег
+                                text_element = t.query_selector('.tag_name')
+                                if text_element:
+                                    tag_text = text_element.inner_text().strip()
+                                
+                                # Вариант 2: data-tag атрибут
+                                if not tag_text:
+                                    tag_text = t.get_attribute('data-tag') or ''
+                                    tag_text = tag_text.strip()
+                                
+                                # Вариант 3: Извлечение из URL
+                                if not tag_text:
+                                    href = t.get_attribute('href')
+                                    if href and '/tag/' in href:
+                                        tag_text = href.split('/tag/')[-1].split('?')[0].strip()
+                                
+                                if tag_text:
+                                    address_tags.append(tag_text)
+                                    self.logger.debug(f"Тег найден: {tag_text} | Источник: {{
+                                        'text': {bool(text_element)}, 
+                                        'data-tag': {bool(t.get_attribute('data-tag'))},
+                                        'href': {bool(href)}
+                                    }}")
+                                    
+                            except Exception as e:
+                                self.logger.error(f"Ошибка обработки тега: {str(e)}")
+                                continue
                         
                         # Логируем результат
                         self.logger.debug(f"Адрес: {address[:8]}... | Теги: {len(address_tags)}")
