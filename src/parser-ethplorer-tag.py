@@ -108,6 +108,9 @@ class EthplorerParser:
                         
                         for t in tag_elements:
                             try:
+                                tag_text = None  # Инициализируем переменную
+                                href = None      # Добавляем инициализацию href
+                                
                                 # Вариант 1: Текстовый тег
                                 text_element = t.query_selector('.tag_name')
                                 if text_element:
@@ -120,18 +123,17 @@ class EthplorerParser:
                                 
                                 # Вариант 3: Извлечение из URL
                                 if not tag_text:
-                                    href = t.get_attribute('href')
+                                    href = t.get_attribute('href')  # Теперь href определен
                                     if href and '/tag/' in href:
                                         tag_text = href.split('/tag/')[-1].split('?')[0].strip()
                                 
                                 if tag_text:
                                     address_tags.append(tag_text)
                                     self.logger.debug(
-                                        f"Тэг найден: {tag_text} | Источник: {{"
-                                        f"'text': {bool(text_element)}, "
-                                        f"'data-tag': {bool(t.get_attribute('data-tag'))}, "
-                                        f"'href': {bool(href)}"
-                                        f"}}"
+                                        f"Тэг найден: {tag_text} | Источник: "
+                                        f"text={bool(text_element)}, "
+                                        f"data-tag={bool(t.get_attribute('data-tag'))}, "
+                                        f"href={bool(href)}"
                                     )
                                     
                             except Exception as e:
