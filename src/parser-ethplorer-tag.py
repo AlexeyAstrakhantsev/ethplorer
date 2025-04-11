@@ -101,13 +101,24 @@ class EthplorerParser:
                         # Логирование перед получением тегов
                         self.logger.debug(f"Обработка адреса: {address}")
                         
-                        # Получаем теги с расширенным логированием
-                        tag_elements = block.query_selector_all('.tags-list .tag__public .tag_name')
+                        # Исправленный селектор для тегов
+                        tag_container = block.query_selector('.tags-list-container')
+                        if tag_container:
+                            tag_elements = tag_container.query_selector_all('.tag__public .tag_name')
+                        else:
+                            tag_elements = []
+                        
+                        # Альтернативный вариант селектора:
+                        # tag_elements = block.query_selector_all(':scope .tags-list .tag__public .tag_name')
+                        
                         address_tags = []
                         if tag_elements:
                             address_tags = list({t.inner_text().strip() for t in tag_elements})
                             self.logger.debug(f"Найдено тегов для {address[:8]}...: {len(address_tags)}")
                             self.logger.debug(f"Список тегов: {', '.join(address_tags)}")
+                            self.logger.debug(f"Блок адреса содержит {len(tag_elements)} тегов")
+                            if tag_elements:
+                                self.logger.debug(f"Пример тегов: {[t.inner_text()[:10] for t in tag_elements[:2]]}...")
                         
                         tag_counter += len(address_tags)
                         
@@ -257,8 +268,11 @@ class EthplorerParser:
 
     def run(self):
         try:
-            # Всегда получаем свежие теги с сайта
-            tags = self.get_tags()
+            # Получаем тег из переменных окружения
+            test_tag = os.getenv('TEST_TAG')
+            tags = [test_tag] if test_tag else self.get_tags()
+            
+            self.logger.info(f"Режим работы: {'ТЕСТОВЫЙ' if test_tag else 'ПРОД'}") 
             self.logger.info(f"Найдено тегов: {len(tags)}")
             
             if not tags:
@@ -271,7 +285,7 @@ class EthplorerParser:
                 self.logger.info(f"Обработан тег {tag}")
             
             self.logger.info("Все теги обработаны. Завершение работы.")
-            
+        
         except Exception as e:
             self.logger.error(f"Критическая ошибка: {e}")
         finally:
