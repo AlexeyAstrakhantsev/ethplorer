@@ -102,7 +102,7 @@ class AddressRepository:
                     logging.debug(f"Successfully saved address {address_data['address']} to all tables")
                     
                     # Логирование после сохранения
-                    logging.info(f"Успешно сохранено {len(address_data.get('tags', []))} тегов для адреса {address_data['address']}")
+                    logging.debug(f"Успешно сохранено {len(address_data.get('tags', []))} тегов для адреса {address_data['address']}")
                     
                 except Exception as e:
                     conn.rollback()
