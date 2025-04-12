@@ -204,7 +204,7 @@ class EthplorerParser:
                     current_page += 1
                     self.logger.info(f"Переход на страницу {current_page}")
                     self.page.wait_for_load_state("networkidle")
-                    time.sleep(2)  # Даем время на загрузку
+                    time.sleep(1)  # Даем время на загрузку
                 except Exception as e:
                     self.logger.error(f"Ошибка пагинации: {e}")
                     break

@@ -61,19 +61,33 @@ class AddressRepository:
                     
                     logging.debug(f"Preparing unified_addresses data: address={address_data['address']}, name={address_name}")
                     
+                    # Получаем тип из тегов
+                    tag_type = None
+                    if tags:
+                        cur.execute("""
+                            SELECT t.type 
+                            FROM tags t
+                            JOIN address_tags at ON t.id = at.tag_id
+                            JOIN addresses a ON at.address_id = a.id
+                            WHERE a.address = %s
+                            LIMIT 1
+                        """, (address_data['address'],))
+                        result = cur.fetchone()
+                        tag_type = result[0] if result else None
+                    
                     cur.execute("""
                         INSERT INTO unified_addresses (address, address_name, type, source)
                         VALUES (%s, %s, %s, %s)
                         ON CONFLICT (address) 
                         DO UPDATE SET 
                             address_name = EXCLUDED.address_name,
-                            type = EXCLUDED.type,
+                            type = COALESCE(EXCLUDED.type, unified_addresses.type),
                             source = EXCLUDED.source
                         RETURNING id
                     """, (
                         address_data['address'],
                         address_name,
-                        "",  # Передаем пустую строку вместо None для поля type
+                        tag_type or "",  # Используем тип из тега или пустую строку
                         "ethplorer.io tag"
                     ))
                     unified_id = cur.fetchone()[0]
@@ -84,13 +98,14 @@ class AddressRepository:
                         for tag in address_data['tags']:
                             # Добавляем тег если его нет
                             cur.execute("""
-                                INSERT INTO tags (tag)
-                                VALUES (%s)
-                                ON CONFLICT (tag) DO UPDATE SET tag = EXCLUDED.tag
+                                INSERT INTO tags (tag, type)
+                                VALUES (%s, COALESCE(%s, 'other'))
+                                ON CONFLICT (tag) DO UPDATE SET 
+                                    tag = EXCLUDED.tag,
+                                    type = COALESCE(EXCLUDED.type, 'other')
                                 RETURNING id
-                            """, (tag,))
+                            """, (tag, address_data.get('type')))
                             tag_id = cur.fetchone()[0]
-                            
                             # Связываем адрес с тегом
                             cur.execute("""
                                 INSERT INTO address_tags (address_id, tag_id)
