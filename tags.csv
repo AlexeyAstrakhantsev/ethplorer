@@ -1,0 +1,344 @@
+id,tag,Type new,type,created_at
+6135,Ampleforth,,other,2025-03-14 12:43:28
+6220,Liquity,,other,2025-03-14 12:43:33
+6315,Enzyme Finance,,other,2025-03-14 12:43:37
+6387,NFT,nft,other,2025-03-14 12:43:42
+6019,Oracle,oracle,other,2025-03-14 12:43:23
+6146,NEST Protocol,,other,2025-03-14 12:43:28
+6016,Lido,staking,other,2025-03-14 12:43:23
+6350,bZx Protocol,,other,2025-03-14 12:43:40
+6031,AAVE,,other,2025-03-14 12:43:23
+6304,Fei Protocol,,other,2025-03-14 12:43:37
+7107,ParaSwap,dex,other,2025-03-14 12:44:28
+6306,mStable,,other,2025-03-14 12:43:37
+6308,Keep,,other,2025-03-14 12:43:37
+6390,Saffron,,other,2025-03-14 12:43:42
+6388,Rari Capital,,other,2025-03-14 12:43:42
+5664,Derivatives,derivative,other,2025-03-14 12:42:41
+6698,Uniswap,dex,other,2025-03-14 12:44:02
+7562,Coinbase,cex,other,2025-03-14 12:45:42
+6500,Yam.Finance,,other,2025-03-14 12:43:49
+8195,FTX,cex,other,2025-03-14 12:47:33
+6395,Ferrum,,other,2025-03-14 12:43:42
+6492,Rubic,bridge,other,2025-03-14 12:43:49
+8172,OKX,cex,other,2025-03-14 12:47:31
+4616,Bancor,,other,2025-03-14 12:39:51
+6274,Tornado.Cash,mixer,other,2025-03-14 12:43:35
+6312,AI,,other,2025-03-14 12:43:37
+7950,Fee Recipient,fee,other,2025-03-14 12:46:52
+8209,Kucoin,cex,other,2025-03-14 12:47:35
+6571,InsurAce Protocol,,other,2025-03-14 12:43:53
+8174,Gate.io,cex,other,2025-03-14 12:47:31
+6032,Chainlink,oracle,other,2025-03-14 12:43:23
+8170,Bittrex,cex,other,2025-03-14 12:47:31
+6017,0x,dex,other,2025-03-14 12:43:23
+8194,HTX,cex,other,2025-03-14 12:47:33
+6777,Bounce Finance,,other,2025-03-14 12:44:06
+6732,dYdX,derivative,other,2025-03-14 12:44:04
+6434,IDEX,dex,other,2025-03-14 12:43:45
+8206,HitBTC,cex,other,2025-03-14 12:47:35
+6742,Sai Stablecoin,token,other,2025-03-14 12:44:04
+6430,Index Protocol,,other,2025-03-14 12:43:45
+6280,Insurance,insurance,other,2025-03-14 12:43:35
+6305,Linear Finance,,other,2025-03-14 12:43:37
+8208,KuCoin,cex,other,2025-03-14 12:47:35
+6138,Seigniorage,,other,2025-03-14 12:43:28
+8189,Kraken,cex,other,2025-03-14 12:47:33
+8171,Crypto.com,cex,other,2025-03-14 12:47:31
+6815,Reserve Rights,,other,2025-03-14 12:44:09
+6535,Furucombo,,other,2025-03-14 12:43:51
+6431,Swerve.fi,,other,2025-03-14 12:43:45
+6536,Hydro Protocol,,other,2025-03-14 12:43:51
+6572,Indexed,,other,2025-03-14 12:43:53
+6494,MahaDAO,dao,other,2025-03-14 12:43:49
+8175,Mxc,cex,other,2025-03-14 12:47:31
+6949,PowerIndex,,other,2025-03-14 12:44:17
+6093,Compound,lending,other,2025-03-14 12:43:26
+21118,Endaoment,,other,2025-03-14 13:19:00
+6568,Nexus Mutual,,other,2025-03-14 12:43:53
+6221,Tokenlon,,other,2025-03-14 12:43:33
+6088,Binance,cex,other,2025-03-14 12:43:26
+6172,Harvest.Finance,farming,other,2025-03-14 12:43:31
+6179,Band Protocol,,other,2025-03-14 12:43:31
+6313,Big Data,,other,2025-03-14 12:43:37
+7005,bZx DAI iToken,,other,2025-03-14 12:44:21
+6089,1inch,dex,other,2025-03-14 12:43:26
+6029,Maker,,other,2025-03-14 12:43:23
+5691,Gold,,other,2025-03-14 12:42:43
+6806,EasyFi,,other,2025-03-14 12:44:09
+5661,BTC,,other,2025-03-14 12:42:41
+8211,Gemini,cex,other,2025-03-14 12:47:35
+7057,DeFi,defi,other,2025-03-14 12:44:24
+6490,dForce,,other,2025-03-14 12:43:49
+5662,Asset-backed,,other,2025-03-14 12:42:41
+6496,Empty Set Dollar,,other,2025-03-14 12:43:49
+6999,bZx ETH iToken,,other,2025-03-14 12:44:21
+6465,Jarvis,,other,2025-03-14 12:43:47
+6460,Hakka Finance,,other,2025-03-14 12:43:47
+6604,Premia,,other,2025-03-14 12:43:55
+6271,AirSwap,dex,other,2025-03-14 12:43:35
+6664,Origin Dollar,,other,2025-03-14 12:44:00
+5657,Stablecoins,token,other,2025-03-14 12:42:41
+6491,PoolTogether,,other,2025-03-14 12:43:49
+6218,Cream.Finance,,other,2025-03-14 12:43:33
+6875,Unit Protocol,,other,2025-03-14 12:44:13
+6358,Set,,other,2025-03-14 12:43:40
+7000,ARCx,,other,2025-03-14 12:44:21
+6978,Ethfinex,,other,2025-03-14 12:44:19
+6812,imBTC,,other,2025-03-14 12:44:09
+7141,bZx SAI iToken,,other,2025-03-14 12:44:30
+6076,Ren,,other,2025-03-14 12:43:26
+8191,Poloniex,cex,other,2025-03-14 12:47:33
+7139,Idle.finance,,other,2025-03-14 12:44:30
+6462,Reflexer,,other,2025-03-14 12:43:47
+2970,MEV Bot,mev,other,2025-03-14 12:35:23
+6736,Augur,,other,2025-03-14 12:44:04
+6025,Polkadot,,other,2025-03-14 12:43:23
+5665,Synths,,other,2025-03-14 12:42:41
+6394,Basis Cash,,other,2025-03-14 12:43:42
+6084,Loopring,,other,2025-03-14 12:43:26
+6767,LuaSwap,,other,2025-03-14 12:44:06
+6882,Antimatter,,other,2025-03-14 12:44:13
+6075,Kyber,dex,other,2025-03-14 12:43:26
+6630,tBTC,,other,2025-03-14 12:43:57
+6807,Cover Protocol,,other,2025-03-14 12:44:09
+6018,Protocol,,other,2025-03-14 12:43:23
+6141,Cosmos Ecosystem,,other,2025-03-14 12:43:28
+6878,Zoracles,,other,2025-03-14 12:44:13
+6275,Liquity LUSD,,other,2025-03-14 12:43:35
+6842,Deus Finance,,other,2025-03-14 12:44:11
+5656,Synthetix,,other,2025-03-14 12:42:41
+5658,ETH,,other,2025-03-14 12:42:41
+6389,Ramp Defi,,other,2025-03-14 12:43:42
+6219,Akropolis,,other,2025-03-14 12:43:33
+6028,Wrapped BTC,,other,2025-03-14 12:43:23
+3,Balancer,,other,2025-03-14 12:27:17
+6353,Frontier,,other,2025-03-14 12:43:40
+6884,Orion Protocol,,other,2025-03-14 12:44:13
+8226,WhiteBIT,cex,other,2025-03-14 12:47:36
+9606,Bonk,,other,2025-03-14 12:50:38
+8223,FixedFloat,cex,other,2025-03-14 12:47:36
+8229,Exmo,cex,other,2025-03-14 12:47:36
+8504,Exchange A,,other,2025-03-14 12:48:00
+8403,Bit-z,,other,2025-03-14 12:47:52
+8247,Mercatox,,other,2025-03-14 12:47:38
+8242,CoinExchange,,other,2025-03-14 12:47:38
+8371,Bitzlato,,other,2025-03-14 12:47:49
+8362,Switchain,,other,2025-03-14 12:47:49
+8553,Sparrow,,other,2025-03-14 12:48:05
+8370,BigOne,,other,2025-03-14 12:47:49
+8313,BIKI.com,,other,2025-03-14 12:47:44
+8532,Artis Turba,,other,2025-03-14 12:48:04
+8533,TAGZ,,other,2025-03-14 12:48:04
+8400,DigiFinex,,other,2025-03-14 12:47:52
+8334,Yunbi,,other,2025-03-14 12:47:46
+8227,Coinone,cex,other,2025-03-14 12:47:36
+8228,HitBtc,cex,other,2025-03-14 12:47:36
+8388,Kuna.io,cex,other,2025-03-14 12:47:50
+8383,Faa.st,,other,2025-03-14 12:47:50
+8443,Idax.global,,other,2025-03-14 12:47:55
+8440,TopBTC,,other,2025-03-14 12:47:55
+8389,Liquid,,other,2025-03-14 12:47:50
+8230,BitMart,cex,other,2025-03-14 12:47:36
+8257,Hotbit,,other,2025-03-14 12:47:39
+9553,Blockchain Cuties,,other,2025-03-14 12:50:34
+1,DEFI,defi,other,2025-03-14 12:27:17
+8173,Vault,,other,2025-03-14 12:47:31
+8424,Coinswitch,,other,2025-03-14 12:47:54
+8333,Cryptopia,cex,other,2025-03-14 12:47:46
+8538,C2CX,,other,2025-03-14 12:48:04
+8263,ShapeShift,dex,other,2025-03-14 12:47:39
+2,YieldFarming,farming,other,2025-03-14 12:27:17
+8213,Yobit,cex,other,2025-03-14 12:47:35
+8459,Abcc,,other,2025-03-14 12:47:57
+8463,Bidesk,,other,2025-03-14 12:47:57
+9426,Collectibles,,other,2025-03-14 12:50:21
+8384,Livecoin.net,,other,2025-03-14 12:47:50
+8244,Remitano,,other,2025-03-14 12:47:38
+9471,AAVEgotchi,,other,2025-03-14 12:50:25
+9575,Small Love Potion,,other,2025-03-14 12:50:36
+8369,Coss.io,,other,2025-03-14 12:47:49
+8461,Coindelta,,other,2025-03-14 12:47:57
+8405,LaToken,,other,2025-03-14 12:47:52
+8477,Trade.io,,other,2025-03-14 12:47:59
+8464,SouthXchange,,other,2025-03-14 12:47:57
+8481,BitBlinx,,other,2025-03-14 12:47:59
+9449,LUKSO,,other,2025-03-14 12:50:23
+9624,Chads.Vc,,other,2025-03-14 12:50:40
+9423,Sports,,other,2025-03-14 12:50:21
+9424,Decentraland,,other,2025-03-14 12:50:21
+8437,Eterbase,,other,2025-03-14 12:47:55
+8283,Indodax,cex,other,2025-03-14 12:47:41
+8246,Bibox,cex,other,2025-03-14 12:47:38
+8406,BlockTrades,,other,2025-03-14 12:47:52
+9420,Illuvium,,other,2025-03-14 12:50:21
+8330,Cobinhood,,other,2025-03-14 12:47:46
+9447,Rarible,,other,2025-03-14 12:50:23
+8317,Crex24,,other,2025-03-14 12:47:44
+8277,FCoin,,other,2025-03-14 12:47:41
+8351,Changelly,,other,2025-03-14 12:47:47
+8284,Bitmax,cex,other,2025-03-14 12:47:41
+6082,Ygov.finance,,other,2025-03-14 12:43:26
+8368,Tidex,,other,2025-03-14 12:47:49
+8367,LAToken,,other,2025-03-14 12:47:49
+8276,OtcBtc,,other,2025-03-14 12:47:41
+8582,Value DeFi Protocol,,other,2025-03-14 12:48:09
+8346,Paribu,,other,2025-03-14 12:47:47
+9555,Playcent,,other,2025-03-14 12:50:34
+8410,Cold Wallet,wallet,other,2025-03-14 12:47:52
+8280,zb.com,,other,2025-03-14 12:47:41
+8315,Bilaxy,,other,2025-03-14 12:47:44
+8541,NEXBIT Pro,,other,2025-03-14 12:48:04
+8482,ATAIX,,other,2025-03-14 12:47:59
+8476,Hoo.com,,other,2025-03-14 12:47:59
+8520,Bitbox,,other,2025-03-14 12:48:02
+8281,Cashierest,,other,2025-03-14 12:47:41
+8540,Bitstamp,cex,other,2025-03-14 12:48:04
+9453,Polychain Monsters,,other,2025-03-14 12:50:23
+8537,Vinex,,other,2025-03-14 12:48:04
+9422,Axie Infinity,,other,2025-03-14 12:50:21
+8519,BiteBtc,,other,2025-03-14 12:48:02
+8318,Catex,,other,2025-03-14 12:47:44
+8521,Folgory,,other,2025-03-14 12:48:02
+8316,Liqui,,other,2025-03-14 12:47:44
+8522,Ggbtc.com,,other,2025-03-14 12:48:02
+9492,GET Protocol,,other,2025-03-14 12:50:27
+8319,Coinbene,,other,2025-03-14 12:47:44
+8299,Bithumb,cex,other,2025-03-14 12:47:43
+9683,Wrapped Origin Axie,,other,2025-03-14 12:50:47
+9495,Gambling,,other,2025-03-14 12:50:27
+9067,Gitcoin Grants,,other,2025-03-14 12:49:21
+6021,Yearn,,other,2025-03-14 12:43:23
+9667,Spirit Clash,,other,2025-03-14 12:50:45
+8844,Curve.Fi,,other,2025-03-14 12:48:47
+9729,Gnosis,multisig,other,2025-03-14 12:50:51
+9249,Grayscale,fund,other,2025-03-14 12:49:52
+8442,Saturn,,other,2025-03-14 12:47:55
+8262,Okex,cex,other,2025-03-14 12:47:39
+9427,Origin,,other,2025-03-14 12:50:21
+8503,Uex,,other,2025-03-14 12:48:00
+9581,VIDT Datalink,,other,2025-03-14 12:50:36
+9522,Virtual Reality,,other,2025-03-14 12:50:29
+8261,Coinex,cex,other,2025-03-14 12:47:39
+8297,Peatio,,other,2025-03-14 12:47:43
+8243,Upbit,cex,other,2025-03-14 12:47:38
+8212,Bitfinex,cex,other,2025-03-14 12:47:35
+9425,Metaverse,,other,2025-03-14 12:50:21
+8626,YFFI.finance,,other,2025-03-14 12:48:12
+6024,Curve.fi,dex,other,2025-03-14 12:43:23
+8295,bw.com,,other,2025-03-14 12:47:43
+8501,Bgogo,,other,2025-03-14 12:48:00
+6035,Lending;Borrowing,lending,other,2025-03-14 12:43:23
+6227,YFII.finance,,other,2025-03-14 12:43:33
+8474,BitUn.io,,other,2025-03-14 12:47:59
+8402,Bity.com,,other,2025-03-14 12:47:52
+8497,Kryptono,,other,2025-03-14 12:48:00
+8303,Bitkub,cex,other,2025-03-14 12:47:43
+8345,Biki.com,,other,2025-03-14 12:47:47
+14281,Evolution Land,,other,2025-03-14 13:00:30
+14285,MATRIX AI,,other,2025-03-14 13:00:30
+14282,Fetch.ai,,other,2025-03-14 13:00:30
+10139,DXdao,,other,2025-03-14 12:51:41
+14457,Iron Bank,,other,2025-03-14 13:00:58
+14180,LA,,other,2025-03-14 13:00:15
+14502,Solv Protocol,,other,2025-03-14 13:01:05
+10110,EtherDelta,dex,other,2025-03-14 12:51:38
+12933,FOAM,,other,2025-03-14 12:57:25
+14921,Alameda Research,fund,other,2025-03-14 13:02:08
+13066,Augmented Finance,,other,2025-03-14 12:57:44
+14692,LooksRare,,other,2025-03-14 13:01:39
+12911,Storage,,other,2025-03-14 12:57:23
+13593,Safe,,other,2025-03-14 12:59:01
+12518,Authereum,,other,2025-03-14 12:56:25
+14302,Peculium,,other,2025-03-14 13:00:32
+13329,Celer,,other,2025-03-14 12:58:23
+10603,BNS.Finance,,other,2025-03-14 12:52:46
+14982,Forsage.io,,other,2025-03-14 13:02:17
+14896,Zebi,,other,2025-03-14 13:02:05
+12850,Bybit Exploit,stolen,other,2025-03-14 12:57:14
+13624,Scroll,,other,2025-03-14 12:59:06
+12063,Idle.Finance,,other,2025-03-14 12:55:12
+14911,Unifier System,,other,2025-03-14 13:02:06
+10565,Kimchi.Finance,,other,2025-03-14 12:52:44
+11074,THORCHAIN,bridge,other,2025-03-14 12:53:30
+10151,Streamity,,other,2025-03-14 12:51:43
+14645,MediKey,,other,2025-03-14 13:01:31
+13643,Tether,,other,2025-03-14 12:59:09
+12928,MAP Protocol,,other,2025-03-14 12:57:25
+12453,MEV Builder,,other,2025-03-14 12:56:15
+11623,DAO Maker,,other,2025-03-14 12:54:28
+12987,Metadium,,other,2025-03-14 12:57:31
+10528,UnFederalReserve,,other,2025-03-14 12:52:41
+13537,OlympusDAO,,other,2025-03-14 12:58:51
+14981,Scam,scam,other,2025-03-14 13:02:17
+10120,Token.Store,,other,2025-03-14 12:51:40
+11134,Digital Gold,,other,2025-03-14 12:53:35
+11822,Aragon,dao,other,2025-03-14 12:54:39
+12988,Ocean Protocol,,other,2025-03-14 12:57:31
+14233,BitMax,,other,2025-03-14 13:00:22
+13836,Polygon (Matic),,other,2025-03-14 12:59:31
+14622,Humanscape,,other,2025-03-14 13:01:26
+14486,Optimism,,other,2025-03-14 13:01:03
+14560,Copper,,other,2025-03-14 13:01:15
+14706,Bitget,cex,other,2025-03-14 13:01:42
+8279,AscendEX,,other,2025-03-14 12:47:41
+10122,Store,,other,2025-03-14 12:51:40
+14979,MyEtherWallet,wallet,other,2025-03-14 13:02:17
+13651,Circle,company,other,2025-03-14 12:59:09
+10167,Bintex Futures,,other,2025-03-14 12:51:53
+12245,Arbitrum,,other,2025-03-14 12:55:44
+11904,Zapper.Fi,,other,2025-03-14 12:54:46
+13652,TrueUSD,,other,2025-03-14 12:59:09
+14768,ARTH,,other,2025-03-14 13:01:49
+11249,Tether Gold,,other,2025-03-14 12:53:42
+14315,GNY.io,,other,2025-03-14 13:00:34
+14314,GANA Technologies,,other,2025-03-14 13:00:34
+14214,Leverj,,other,2025-03-14 13:00:20
+13295,Ankr,,other,2025-03-14 12:58:21
+10027,ZKBase,,other,2025-03-14 12:51:32
+14993,Phishing,phishing,other,2025-03-14 13:02:18
+10117,Token,,other,2025-03-14 12:51:40
+5,Automated Market Maker,,other,2025-03-14 12:27:17
+13803,Alchemix Finance,,other,2025-03-14 12:59:25
+13000,nahmii,,other,2025-03-14 12:57:33
+11983,Sybil Delegate,,other,2025-03-14 12:54:59
+13617,Zerion,,other,2025-03-14 12:59:05
+14422,Value Defi,,other,2025-03-14 13:00:52
+10802,Healthcare,,other,2025-03-14 12:53:01
+14553,Dragonereum,,other,2025-03-14 13:01:14
+13391,Phala,,other,2025-03-14 12:58:29
+13293,MANTRA,,other,2025-03-14 12:58:21
+14232,Resfinex Exchange,,other,2025-03-14 13:00:22
+13778,KyberSwap,dex,other,2025-03-14 12:59:21
+11350,Polkastarter,,other,2025-03-14 12:53:50
+14241,Multichain,bridge,other,2025-03-14 13:00:24
+14400,Hop Protocol,,other,2025-03-14 13:00:48
+14201,Bankera,,other,2025-03-14 13:00:18
+14620,Coronacoin,,other,2025-03-14 13:01:26
+13427,MCDEX,,other,2025-03-14 12:58:33
+13877,Etheremon,,other,2025-03-14 12:59:37
+14442,Value DeFi,,other,2025-03-14 13:00:55
+14592,Eigenlayer,,other,2025-03-14 13:01:21
+12408,CEX,cex,other,2025-03-14 12:56:07
+14217,ZB.com,,other,2025-03-14 13:00:20
+6091,Yield Aggregator,farming,other,2025-03-14 12:43:26
+12811,Aura,,other,2025-03-14 12:57:06
+8225,Huobi,cex,other,2025-03-14 12:47:36
+4,Governance,,other,2025-03-14 12:27:17
+14980,MyCrypto,,other,2025-03-14 13:02:17
+12393,GearBox,,other,2025-03-14 12:56:04
+13363,Darwinia Native,,other,2025-03-14 12:58:26
+8282,Coinhako,,other,2025-03-14 12:47:41
+13332,IOT,,other,2025-03-14 12:58:23
+13106,ETF,fund,other,2025-03-14 12:57:50
+12754,Nexo,,other,2025-03-14 12:56:56
+10750,Percent.Finance,,other,2025-03-14 12:52:56
+10820,BlackRock,fund,other,2025-03-14 12:53:03
+13942,BetProtocol,,other,2025-03-14 12:59:47
+10699,NYAN.Finance,,other,2025-03-14 12:52:52
+12930,Remme,,other,2025-03-14 12:57:25
+10138,Switcheo Exchange,,other,2025-03-14 12:51:41
+10768,Soft Yearn,,other,2025-03-14 12:52:58
+6027,SushiSwap,dex,other,2025-03-14 12:43:23
+,Exchange,cex,other,
+,dex,dex,other,
