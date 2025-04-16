@@ -101,8 +101,7 @@ class AddressRepository:
                                 INSERT INTO tags (tag, type)
                                 VALUES (%s, COALESCE(%s, 'other'))
                                 ON CONFLICT (tag) DO UPDATE SET 
-                                    tag = EXCLUDED.tag,
-                                    type = COALESCE(EXCLUDED.type, 'other')
+                                    tag = EXCLUDED.tag
                                 RETURNING id
                             """, (tag, address_data.get('type')))
                             tag_id = cur.fetchone()[0]
